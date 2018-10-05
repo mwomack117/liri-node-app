@@ -3,9 +3,9 @@ require("dotenv").config();
 var keys = require("./keys")
 
 var Spotify = require('node-spotify-api');
- 
+
 var spotify = new Spotify(keys.spotify);
- 
+
 var programToRun = process.argv[2];
 var action = process.argv[3];
 
@@ -21,14 +21,14 @@ var action = process.argv[3];
 
 if (programToRun === "spotify-this-song") {
     spotifyThisSong(action);
-} else if ( programToRun === "movie-this") {
+} else if (programToRun === "movie-this") {
     movieThis();
-} else if ( programToRun === "do-what-it-says") {
+} else if (programToRun === "do-what-it-says") {
     doWhatitSays()
-} else if ( programToRun === "concert-this") {
+} else if (programToRun === "concert-this") {
     concertThis()
- } else {
-  console.log("err, did not understand command")
+} else {
+    console.log("err, did not understand command")
 };
 
 
@@ -36,32 +36,40 @@ if (programToRun === "spotify-this-song") {
 function spotifyThisSong(song) {
     if (song) {
         var query = song
-    } else {
+    }
+    else {
         var query = "The Sign"
     }
-    spotify.search({ type: 'track', query: query }, function(err, data) {
+    spotify.search({ type: 'track', query: query, }, function (err, data) {
         if (err) {
-          return console.log('Error occurred: ' + err);
+            return console.log('Error occurred: ' + err);
         }
-    
-        // console.log(data.tracks.items[19].artists[0].name); this is how to retrieve from ace of base track
+        if (query === song) {
 
-//      Artist(s) 
-        console.log(`Artist: ${data.tracks.items[0].artists[0].name}`); 
+            //      Artist(s) 
+            console.log(`Artist: ${data.tracks.items[0].artists[0].name}`);
 
-//      * The song's name
-        console.log(`Song name: ${data.tracks.items[0].name}`); 
+            //      * The song's name
+            console.log(`Song name: ${data.tracks.items[0].name}`);
 
-//      * The album that the song is from
-        console.log(`Album name: ${data.tracks.items[0].album.name}`); 
+            //      * The album that the song is from
+            console.log(`Album name: ${data.tracks.items[0].album.name}`);
 
-//      * A preview link of the song from Spotify
-        console.log(`Preview the song here: ${data.tracks.items[0].preview_url}`); 
+            //      * A preview link of the song from Spotify
+            console.log(`Preview the song here: ${data.tracks.items[0].preview_url}`);
 
-//    * If no song is provided then your program will default to "The Sign" by Ace of Base.
-      
-      });
+            //    * If no song is provided then your program will default to "The Sign" by Ace of Base.
+        } else {
+            console.log(`Artist: ${data.tracks.items[19].artists[0].name}`);
+            console.log(`Song name: ${data.tracks.items[19].name}`);
+            console.log(`Album name: ${data.tracks.items[19].album.name}`);
+            console.log(`Preview the song here: ${data.tracks.items[19].preview_url}`);
+        }
+
+    });
 }
+
+
 
 
 function movieThis() {
