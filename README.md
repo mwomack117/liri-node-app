@@ -11,7 +11,7 @@ The acceptable commands liri.js takes in are:
 
    * `do-what-it-says`
    
-### What each comman should do
+### What each command should do
 
 1. `node liri.js concert-this <artist/band name here>`
   * searches Bands In Town Artist Events API and returns: 
