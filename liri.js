@@ -77,7 +77,9 @@ SONG DATA
 Artist: ${data.tracks.items[0].artists[0].name}
 Song name: ${data.tracks.items[0].name}
 Album name: ${data.tracks.items[0].album.name}
-Preview the song here: ${data.tracks.items[0].preview_url}`
+Preview the song here: ${data.tracks.items[0].preview_url}
+*Command used: "spotify-this-song"
+`
 
     // Store "ace of base" info into variable 
     var aceBase = `
@@ -86,7 +88,9 @@ SONG DATA
 Artist: ${data.tracks.items[19].artists[0].name}
 Song name: ${data.tracks.items[19].name}
 Album name: ${data.tracks.items[19].album.name}
-Preview the song here: ${data.tracks.items[19].preview_url}`
+Preview the song here: ${data.tracks.items[19].preview_url}
+*Command used: "spotify-this-song"
+`
 
     // If valid song is input, console log and append to log.txt
     if (song) {
@@ -135,7 +139,9 @@ Rotten Tomatoes score: ${JSON.parse(body).Ratings[1].Value}
 Country(ies) where movie was produced: ${JSON.parse(body).Country}
 Language: ${JSON.parse(body).Language}
 Plot: ${JSON.parse(body).Plot}
-Actors: ${JSON.parse(body).Actors}`
+Actors: ${JSON.parse(body).Actors}
+*Command used: "movie-this"
+`
 
     // If valid song is input, console log and append to log.txt
     if (movie) {
@@ -172,7 +178,9 @@ CONCERT DATA
 Artist(s): ${JSON.parse(body)[0].lineup}
 Venue: ${JSON.parse(body)[0].venue.name}
 Venue location: ${JSON.parse(body)[0].venue.city}, ${JSON.parse(body)[0].venue.region}, ${JSON.parse(body)[0].venue.country}
-Date of event:  ${JSON.parse(body)[0].datetime}`
+Date of event:  ${JSON.parse(body)[0].datetime}
+*Command used: "concert-this"
+`
 
     // If valid song is input, console log and append to log.txt
     if (artist) {
