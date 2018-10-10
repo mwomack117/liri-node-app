@@ -1,6 +1,13 @@
 # liri-node-app
-LIRI (*_Language_ Interpretation and Recognition Interface*) will be a command line node app that takes in parameters and gives you back data.
+**LIRI** (*_Language_ Interpretation and Recognition Interface*) will be a command line node app that takes in parameters and gives you back data. 
 
+##### Why is LIRI useful?
+  * Let's user easily retrieve information about a movie they like.
+  * Let's user search a song title and get back artist and album details.
+  * Let's user find out where and when there favorite artist is performing next.
+  * And liri can also automatically log all the user's searches to a text file.
+
+## How it works
 ### liri can take in the following commands:
    * `concert-this`
 
