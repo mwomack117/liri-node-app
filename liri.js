@@ -1,26 +1,24 @@
 // read and set any environment variables with the dotenv package
 require("dotenv").config();
 
-// grab request package
-var request = require("request");
+var request = require("request"); // grab request package
 
-// grab fs package to handle read/write.
-var fs = require("fs");
+var fs = require("fs"); // grab fs package to handle read/write.
 
-var programToRun = process.argv[2];
+var moment = require('moment'); // grab moment package 
 
-var song = process.argv[3]; // will use with spotify-this-song command
+var programToRun = process.argv[2]; // variable for liri command
 
-var movie = process.argv[3]; // will use with movie-this command
+var action = process.argv[3]; // what user searches for
 
-var artist = process.argv[3]; // will use with concert-this command
+var keys = require("./keys") // grab spotify keys
 
-var keys = require("./keys")
+var Spotify = require('node-spotify-api'); // grab node-spotify-api package
 
-var Spotify = require('node-spotify-api');
+var spotify = new Spotify(keys.spotify); // access spotify keys 
 
-var spotify = new Spotify(keys.spotify);
-
+var omdb = keys.omdb.id; // access omdb api
+var bands = keys.bandsInTown.id; // access bandInTown api
 
 // Make it so liri.js can take in one of the following commands:
 
@@ -32,18 +30,20 @@ var spotify = new Spotify(keys.spotify);
 
 //    * `do-what-it-says`
 
+
 /// If else statements that returns data for valid commands
+
   // Spotify
 if (programToRun === "spotify-this-song") {
-  spotifyThisSong(song);
+  spotifyThisSong(action);
 
   // OMDB
 } else if (programToRun === "movie-this") {
-  movieThis(movie)
+  movieThis(action)
 
   // BandsInTown
 } else if (programToRun === "concert-this") {
-  concertThis(artist)
+  concertThis(action)
 
   // DoWhatItSays
 } else if (programToRun === "do-what-it-says") {
@@ -52,12 +52,13 @@ if (programToRun === "spotify-this-song") {
 } else {
   console.log("err, did not understand command")
 };
+
 /// end of If/Else statement 
 
 
 /// ## FUNCTIONS ## ///
 
-// function to retrieve song information from the Spotify API //
+// function to retrieve song information from the Spotify API 
 function spotifyThisSong(song) {
   if (song) {
     var query = song
@@ -99,7 +100,7 @@ Preview the song here: ${data.tracks.items[19].preview_url}
         if (err) {
           return console.log(err);
         } else {
-          console.log("content added to log.txt")
+          console.log("content saved to log.txt")
         }
       });
 
@@ -110,7 +111,7 @@ Preview the song here: ${data.tracks.items[19].preview_url}
         if (err) {
           return console.log(err);
         } else {
-          return console.log("content added to log.txt")
+          return console.log("content saved to log.txt")
         }
       });
     };
@@ -118,17 +119,19 @@ Preview the song here: ${data.tracks.items[19].preview_url}
   });
 }
 
+// Function to retrieve movie data form OMDB API
 function movieThis(movie) {
   if (movie) {
     movie = movie
   } else {
     movie = "Mr. Nobody"
   }
-  request("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
+  request("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=" + omdb, function (error, response, body) {
     if (error) {
       return console.error(error);
     }
 
+    // Store movie data into variable
     var movieData = `
 
 MOVIE DATA
@@ -150,7 +153,7 @@ Actors: ${JSON.parse(body).Actors}
         if (err) {
           console.log(err);
         } else {
-          console.log("content added to log.txt")
+          console.log("content saved to log.txt")
         }
       });
     }
@@ -159,6 +162,7 @@ Actors: ${JSON.parse(body).Actors}
   });
 }
 
+// Functions to retrieve data form BANDS IN TOWN API
 function concertThis(artist) {
   if (artist) {
     artist = artist;
@@ -166,19 +170,19 @@ function concertThis(artist) {
     artist = "Drake";
   }
   console.log(artist)
-  request("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp", function (error, response, body) {
+  request("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=" + bands, function (error, response, body) {
     if (error) {
       console.log(error);
     }
-
+    
     // Store concert data into variable
     var concertData = `
-
+    
 CONCERT DATA
 Artist(s): ${JSON.parse(body)[0].lineup}
 Venue: ${JSON.parse(body)[0].venue.name}
 Venue location: ${JSON.parse(body)[0].venue.city}, ${JSON.parse(body)[0].venue.region}, ${JSON.parse(body)[0].venue.country}
-Date of event:  ${JSON.parse(body)[0].datetime}
+Date of event:  ${moment(JSON.parse(body)[0].datetime).format('L')}
 *Command used: "concert-this"
 `
 
@@ -189,7 +193,7 @@ Date of event:  ${JSON.parse(body)[0].datetime}
         if (err) {
           console.log(err);
         } else {
-          console.log("content added to log.txt")
+          console.log("content saved to log.txt")
         }
       });
     }
@@ -197,6 +201,7 @@ Date of event:  ${JSON.parse(body)[0].datetime}
   });
 }
 
+// Function: do what it says 
 function doWhatItSays() {
   fs.readFile("random.txt", "utf8", function (error, data) {
     if (error) {
