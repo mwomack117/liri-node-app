@@ -4,6 +4,14 @@
 
 Link to view GIF of working app: https://gph.is/2OOCk37
 
+### Prerequisites
+ * Node.js
+ #### Node Packages Used
+  * Node-Spotify-Api
+  * Request
+  * DotEnv
+  * Moment
+
 ##### Why is LIRI useful?
   * Let's user easily retrieve information about a movie they like.
   * Let's user search a song title and get back artist and album details.
