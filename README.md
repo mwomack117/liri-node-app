@@ -1,5 +1,5 @@
 # liri-node-app
-**LIRI** (*_Language_ Interpretation and Recognition Interface*) will be a command line node app that takes in parameters and gives you back data. 
+**LIRI** (*_Language_ Interpretation and Recognition Interface*) is a command line node app that takes in parameters and gives you back data. 
 
 
 Link to view GIF of working app: https://gph.is/2OOCk37
